@@ -3,12 +3,12 @@ const router = express.Router()
 const userController = require('../controllers/userController')
 const tokenValidation = require('../middleware/tokenValidation')
 
-router.post('/signup', userController.createUser)
+router.post('/Signup', userController.createUser)
 
-router.post('/login', userController.loginUser)
+router.post('/Login', userController.loginUser)
 
 router.post(
-  '/profile',
+  '/Profile',
   tokenValidation.validateToken,
   userController.getUserProfile
 )
