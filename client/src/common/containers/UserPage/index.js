@@ -1,6 +1,6 @@
 import React from 'react';
 import "./style.css"
-
+import { useSelector } from 'react-redux';
 import Account from '../../components/Account'
 
 
@@ -25,17 +25,26 @@ const accounts = [
     }
   ];
 
-function Profil() {
+function UserPage() {
+    // Récupérer les informations de l'utilisateur depuis l'état Redux
+    const user = useSelector(state => state.auth.user);
+
+    if (!user) {
+      // Gérer le cas où 'user' est null (par exemple, afficher un message ou rediriger)
+      return <div>Loading user data...</div>; // ou toute autre logique appropriée
+  }
+
     return (
-        <main className="main bg-dark">
-            <div className="header">
-                <h1>Welcome back<br />Tony Jarvis!</h1>
-                <button className="edit-button">Edit Name</button>
-            </div>
-            <h2 className="sr-only">Accounts</h2>
-            <Account accounts={accounts}/>
-        </main>
+      <main className="main bg-dark">
+          <div className="header">
+              {/* Utiliser les informations de l'utilisateur pour le message de bienvenue */}
+              <h1>Welcome back<br />{user.firstName} {user.lastName}!</h1>
+              <button className="edit-button">Edit Name</button>
+          </div>
+          <h2 className="sr-only">Accounts</h2>
+          <Account accounts={accounts}/>
+      </main>
     )
 }
 
-export default Profil;
+export default UserPage;

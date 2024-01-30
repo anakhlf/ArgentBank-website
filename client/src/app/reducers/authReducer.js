@@ -1,5 +1,6 @@
 const initialState = {
     isLoggedIn: false,
+    user: null,
     token: null,
     error: null,
   };
@@ -11,6 +12,7 @@ const initialState = {
           ...state,
           isLoggedIn: true,
           token: action.payload.token,
+          user: action.payload.user,
           error: null,
         };
       case 'LOGIN_FAILURE':
