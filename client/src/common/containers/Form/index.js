@@ -23,7 +23,6 @@ function Form () {
         setError(''); // Réinitialiser les erreurs précédentes
 
         try {
-            console.log("Envoi de la requête", { email: formData.email, password: formData.password });
             const response = await fetch('http://localhost:3001/api/v1/user/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

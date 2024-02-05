@@ -21,3 +21,5 @@ const Account = ({ accounts }) => {
 }
 
 export default Account;
+
+//A rediviser en 3 props

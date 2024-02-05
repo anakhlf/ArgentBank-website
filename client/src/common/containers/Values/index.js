@@ -44,3 +44,5 @@ function Values () {
 }
 
 export default Values;
+
+//Rajouter ce qui dans mon map dans un composent

@@ -1,0 +1,23 @@
+.div_buttons {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+
+.sign-in-button {
+    display: block;
+    width: 50%;
+    padding: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    border-color: #00bc77;
+    background-color: #00bc77;
+    color: #fff;
+}
+
+input:disabled {
+    background-color: #e9ecef; 
+    color: #495057; /* Couleur du texte pour les champs désactivés */
+    cursor: not-allowed; /* Change le curseur pour indiquer l'interdiction */
+}  

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./style.css"
 import { useSelector } from 'react-redux';
 import Account from '../../components/Account'
-
+import ModalEdit from '../modalEdit';
 
 const accounts = [
     {
@@ -28,6 +28,9 @@ const accounts = [
 function UserPage() {
     // Récupérer les informations de l'utilisateur depuis l'état Redux
     const user = useSelector(state => state.auth.user);
+    const [isModalOpen, setModalOpen] = useState(false);
+
+    const toggleModal = () => setModalOpen(!isModalOpen);
 
     if (!user) {
       // Gérer le cas où 'user' est null (par exemple, afficher un message ou rediriger)
@@ -39,10 +42,11 @@ function UserPage() {
           <div className="header">
               {/* Utiliser les informations de l'utilisateur pour le message de bienvenue */}
               <h1>Welcome back<br />{user.firstName} {user.lastName}!</h1>
-              <button className="edit-button">Edit Name</button>
+              <button className="edit-button" onClick={toggleModal}>Edit Name</button>
           </div>
           <h2 className="sr-only">Accounts</h2>
           <Account accounts={accounts}/>
+          {isModalOpen && <ModalEdit user={user} closeModal={toggleModal} />}
       </main>
     )
 }

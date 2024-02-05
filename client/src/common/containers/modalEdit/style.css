@@ -1,0 +1,13 @@
+.modal {
+    position: fixed; /* Positionnement fixe par rapport au viewport */
+    top: 50%; /* Centrage vertical */
+    left: 50%; /* Centrage horizontal */
+    transform: translate(-50%, -50%); /* Ajustement précis du centre */
+    width: 60%; /* Largeur de la modale */
+    max-width: 600px; /* Largeur maximale pour les grands écrans */
+    background-color: white; /* Fond blanc */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Légère ombre */
+    z-index: 1000; /* S'assurer que la modale soit au-dessus des autres éléments */
+    padding: 20px; /* Espacement interne */
+    box-sizing: border-box; /* Le padding et border sont inclus dans la largeur/hauteur */
+}
