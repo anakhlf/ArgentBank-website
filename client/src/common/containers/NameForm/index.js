@@ -6,7 +6,6 @@ import { fetchUserData, setUserData } from '../../../app/actions/userAction';
 
 const NameForm = ({ closeModal }) => {
     const user = useSelector(state => state.auth.user);
-    console.log('user:',user)
     const [userName, setUserName] = useState('');
     const dispatch = useDispatch();
 
@@ -16,7 +15,6 @@ const NameForm = ({ closeModal }) => {
         }
       }, [user]);
 
-    console.log('user2:',userName)
     const handleSubmit = async (event) => {
         event.preventDefault();
         
@@ -44,18 +42,15 @@ const NameForm = ({ closeModal }) => {
             }
 
             const data = await response.json();
-            console.log('new data:', data.body);
         
         // Dispatche l'action updateUser avec les données contenues dans le body de la réponse
         dispatch(setUserData(data.body));
         dispatch(fetchUserData()); 
-        console.log('user6:',user);
         closeModal();
         } catch (error) {
             console.error('There was a problem with your fetch operation:', error);
         }
     };
-    console.log('user3:',userName)
     return (
         <form onSubmit={handleSubmit}>
             <Field label="User name :" type="text" id="UserName" name="UserName" value={userName} onChange={(e) => setUserName(e.target.value)} />

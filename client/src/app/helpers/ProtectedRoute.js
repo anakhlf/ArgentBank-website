@@ -1,16 +1,17 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
-  const isAuthenticated = useSelector((state) => state.auth.isLoggedIn); // Assurez-vous que le chemin est correct
-
-  if (!isAuthenticated) {
-    // Redirigez vers la page de connexion si l'utilisateur n'est pas authentifié
-    return <Navigate to="/signUp" />;
+  const isLoading = useSelector((state) => state.auth.isLoading);
+  const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
+  const token = localStorage.getItem('token');
+  if (token) {
+    if (isLoading) { 
+      return <div>Chargement...</div>; 
+    }
   }
-
-  return children;
+  // Redirige vers la page de connexion si non authentifié après le chargement
+  return isAuthenticated ? children : <Navigate to="/SignUp" />;
 };
 
 export default ProtectedRoute;

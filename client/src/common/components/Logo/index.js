@@ -1,7 +1,7 @@
 import React from 'react';
 import "./style.css"
 
-import logo from '../../../assets/img/argentBankLogo.png';
+import logo from '../../../assets/img/argentBankLogo.webp';
 
 function Logo() {
     return (

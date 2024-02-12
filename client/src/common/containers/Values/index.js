@@ -1,10 +1,12 @@
 import React from 'react';
 import "./style.css"
 
+import FeatureItem from '../../components/FeatureItem';
+
 // Importer les images
-import chatIcon from '../../../assets/img/icon-chat.png';
-import moneyIcon from '../../../assets/img/icon-money.png';
-import securityIcon from '../../../assets/img/icon-security.png';
+import chatIcon from '../../../assets/img/icon-chat.webp';
+import moneyIcon from '../../../assets/img/icon-money.webp';
+import securityIcon from '../../../assets/img/icon-security.webp';
 
 // Tableau avec les imports d'images
 const valuesList = [
@@ -32,17 +34,16 @@ function Values () {
     return (
         <section className="features">
             <h2 className="sr-only">Features</h2>
-            {valuesList.map(value => (   
-                <div key={value.id} className="feature-item">
-                    <img src={value.src} alt={value.title} className="feature-icon" />
-                    <h3 className="feature-item-title">{value.title}</h3>
-                    <p>{value.description}</p>
-                </div>
+            {valuesList.map(value => (
+                <FeatureItem
+                    key={value.id}
+                    src={value.src}
+                    title={value.title}
+                    description={value.description}
+                />
             ))}
         </section>
     );
 }
 
 export default Values;
-
-//Rajouter ce qui dans mon map dans un composent

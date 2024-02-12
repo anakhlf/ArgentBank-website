@@ -1,9 +1,7 @@
-export const loginSuccess = (data) => {
-    return {
-      type: 'LOGIN_SUCCESS',
-      payload: data,
-    };
-  };
+export const loginSuccess = (user, token) => ({
+  type: 'LOGIN_SUCCESS',
+  payload: { user, token },
+});
   
   export const loginFailure = (error) => {
     return {
@@ -12,21 +10,41 @@ export const loginSuccess = (data) => {
     };
   };
 
-  export const loginUser = (credentials) => async (dispatch) => {
+  export const loginUser = (credentials, navigate) => async (dispatch) => {
     try {
-      let response = await fetch("http://localhost:3001/api/v1/user/login", {
-        method: "POST",
+      const response = await fetch('http://localhost:3001/api/v1/user/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(credentials),
-        headers: { "Content-Type": "application/json" },
-      }); 
+      });
+  
+      const data = await response.json();
   
       if (response.ok) {
-        const data = await response.json();
-        dispatch(loginSuccess(data));
-        localStorage.setItem('token', data.token);
-        // Redirection ou autre logique de post-connexion
+        localStorage.setItem('token', data.body.token);
+        const userInfoResponse = await fetch('http://localhost:3001/api/v1/user/profile', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${data.body.token}`,
+          },
+        });
+  
+        if (userInfoResponse.ok) {
+          const userInfoData = await userInfoResponse.json();
+          // Créez un nouvel objet avec seulement les données nécessaires
+          const userData = {
+            firstName: userInfoData.body.firstName,
+            lastName: userInfoData.body.lastName,
+            userName: userInfoData.body.userName,
+          };
+          // Dispatchez l'action loginSuccess avec ce nouvel objet et le token
+          dispatch(loginSuccess(userData, data.body.token));
+          navigate('/Profil'); // Naviguer vers le profil après la connexion réussie
+        } else {
+          dispatch(loginFailure("Failed to fetch user data"));
+        }
       } else {
-        dispatch(loginFailure("Invalid credentials"));
+        dispatch(loginFailure(data.message || 'Authentication failed'));
       }
     } catch (error) {
       dispatch(loginFailure(error.message));

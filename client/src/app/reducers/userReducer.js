@@ -8,11 +8,10 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'SET_USER_DATA':
-            // Assurez-vous que la structure du payload correspond à celle de votre état initial
             return {
                 ...state,
-                ...action.payload,
-                error: null, // Réinitialiser l'erreur lors du chargement réussi
+                ...action.payload, // Cela met à jour firstName, lastName, et userName directement à la racine de l'état
+                error: null, // Vous pouvez réinitialiser l'erreur ici
             };
         case 'UPDATE_USER':
             return {

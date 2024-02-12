@@ -29,9 +29,7 @@ function UserPage() {
     // Récupérer les informations de l'utilisateur depuis l'état Redux
     const user = useSelector(state => state.auth.user);
     const [isModalOpen, setModalOpen] = useState(false);
-
     const toggleModal = () => setModalOpen(!isModalOpen);
-
     if (!user) {
       // Gérer le cas où 'user' est null (par exemple, afficher un message ou rediriger)
       return <div>Loading user data...</div>; // ou toute autre logique appropriée

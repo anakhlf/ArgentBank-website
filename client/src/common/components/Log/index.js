@@ -1,12 +1,13 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import "./style.css";
 
 function Log() {
     const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
-    const userName = useSelector((state) => state.auth.user?.name); 
+    const user = useSelector(state => state.auth.user);
     const dispatch = useDispatch();
+
 
     const handleLogout = () => {
         dispatch({ type: 'LOGOUT' });
@@ -19,7 +20,7 @@ function Log() {
                 <div id='div_log'>
                     <Link to="/Profil" className="main-nav-item">
                         <i className="fa fa-user-circle"></i>
-                        {userName}
+                        {user?.userName}
                     </Link>
                     <Link to="/" className="main-nav-item" onClick={handleLogout}>
                         <i className="fa fa-sign-out"></i>

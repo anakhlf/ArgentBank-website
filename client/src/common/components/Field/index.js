@@ -1,19 +1,30 @@
 import React from 'react';
 import "./style.css";
 
-const Field = ({ label, type, id, name, value, disabled, onChange, isCheckbox }) => {
+const Field = ({ label, type, id, name, value, checked, disabled, onChange, isCheckbox }) => {
+    const divId = isCheckbox ? `div-${id}` : undefined;
     return (
-        <div className={`input-${isCheckbox ? 'remember' : 'wrapper'}`}>
+        <div id={divId} className={`input-${isCheckbox ? 'remember' : 'wrapper'}`}>
             {!isCheckbox && <label htmlFor={id}>{label}</label>}
-            <input 
-              type={type} 
-              id={id} 
-              name={name} 
-              onChange={onChange} 
-              value={isCheckbox ? undefined : value} 
-              defaultValue={isCheckbox ? value : undefined}
-              disabled={disabled}
-            /> 
+            {isCheckbox ? (
+                <input 
+                    type={type} 
+                    id={id} 
+                    name={name} 
+                    checked={checked} // Utilisez `checked` pour les checkbox
+                    onChange={onChange} 
+                    disabled={disabled} 
+                />
+            ) : (
+                <input 
+                    type={type} 
+                    id={id} 
+                    name={name} 
+                    value={value} // Utilisez `value` pour les champs autres que checkbox
+                    onChange={onChange} 
+                    disabled={disabled} 
+                />
+            )}
             {isCheckbox && <label htmlFor={id}>{label}</label>}
         </div>
     );

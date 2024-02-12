@@ -1,27 +1,25 @@
-import "./style.css"
-import Menu from '../../common/containers/Menu/index'
-import Footer from '../../common/containers/Footer/index'
+import "./style.css";
 import UserPage from '../../common/containers/UserPage/index';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
-
-
-function Profil () {
-    const dispatch = useDispatch();
+function Profil() {
+    //const dispatch = useDispatch();
 
     useEffect(() => {
-        return () => {
-            dispatch({ type: 'LOGOUT' });
-            localStorage.removeItem('token'); // Nettoyer le token du localStorage
-            console.log("tu es bien deco");
+        // Cette fonction est appelée quand l'utilisateur tente de quitter la page
+        const handleBeforeUnload = (event) => {
         };
-    }, [dispatch]);
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, []);
+
     return (
         <div>
-            <Menu />
             <UserPage />
-            <Footer />
         </div>
     )
 }

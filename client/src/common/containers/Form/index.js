@@ -1,14 +1,32 @@
-import React, { useState } from 'react';
+import React, {  useState, useEffect } from 'react';
 import "./style.css";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Field from '../../components/Field/index'
+import { loginUser } from '../../../app/actions/authAction'; // Ajustez le chemin selon votre structure de fichiers
+
 
 function Form () {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [formData, setFormData] = useState({ email: '', password: '', rememberMe: false });
+    const [formData, setFormData] = useState({ 
+        email: localStorage.getItem('email') || '', 
+        password: localStorage.getItem('password') || '', 
+        rememberMe: localStorage.getItem('rememberMe') === 'true' 
+    });
     const [error, setError] = useState('');
+
+    // Fonction pour initialiser le formulaire avec les données de localStorage
+    useEffect(() => {
+        const email = localStorage.getItem('email');
+        const password = localStorage.getItem('password');
+        const rememberMe = localStorage.getItem('rememberMe') === 'true';
+
+        if (email && password && rememberMe) {
+            setFormData({ email, password, rememberMe });
+        }
+    }, []);
+
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -18,64 +36,38 @@ function Form () {
         }));
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        setError(''); // Réinitialiser les erreurs précédentes
-
-        try {
-            const response = await fetch('http://localhost:3001/api/v1/user/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    email: formData.email, 
-                    password: formData.password
-                })
-            });
-            const data = await response.json();
-        if (response.ok) {
-            
-            localStorage.setItem('token', data.body.token);
-
-            // Faire une autre requête pour obtenir les informations de l'utilisateur
-            const userInfoResponse = await fetch('http://localhost:3001/api/v1/user/profile', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${data.body.token}`
-            },
-            cache: 'no-cache' // Ajout de cette option pour éviter l'utilisation du cache
-            });
-            
-            const userInfoData = await userInfoResponse.json();
-            // Vérifier si la requête a réussi avant de dispatcher
-            if (userInfoResponse.ok) {
-                dispatch({
-                    type: 'LOGIN_SUCCESS',
-                    payload: {
-                        user: userInfoData.body, // Utiliser les données contenues dans 'body'
-                        token: data.body.token
-                    }
-                });
-                console.log("hello there!")
-                navigate('/Profil');
-            } else {
-                // Gérer les erreurs pour la requête d'informations de l'utilisateur
-                setError(userInfoData.message || 'Erreur lors de la récupération des informations utilisateur');
-            }
-        } else {
-            // Gérer les erreurs d'authentification
-            setError(data.message || 'Échec de lauthentification');
-        }
-    } catch (error) {
-        console.error('Erreur lors du processus de connexion', error);
-        setError('Erreur de connexion au serveur');
-    }
-};
+        dispatch(loginUser({ email: formData.email, password: formData.password }, navigate, setError));
+      };
 
     return (
         <form onSubmit={handleSubmit}>
-            <Field label="Email" type="text" id="email" name="email" onChange={handleChange} />
-            <Field label="Password" type="password" id="password" name="password" onChange={handleChange} />
-            <Field label="Remember me" type="checkbox" id="remember-me" name="rememberMe" isCheckbox onChange={handleChange} />
+            <Field
+                label="Email"
+                type="text"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+            />
+            <Field
+                label="Password"
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password} 
+                onChange={handleChange}
+            />
+            <Field
+                label="Remember me"
+                type="checkbox"
+                id="remember-me"
+                name="rememberMe"
+                checked={formData.rememberMe}
+                onChange={handleChange}
+                isCheckbox={true}
+            />
             <button type="submit" className="sign-in-button">Sign In</button>
         </form>
     )

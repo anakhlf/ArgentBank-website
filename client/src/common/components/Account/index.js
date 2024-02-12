@@ -1,21 +1,18 @@
 import React from 'react';
 import "./style.css"
-
-import Button from '../Button'
+import AccountItem from '../AccountItem';
 
 const Account = ({ accounts }) => {
     return (
         <div>
-        {accounts.map(account => (
-            <section key={account.id} className="account">
-            <div className="account-content-wrapper">
-                <h3 className="account-title">{account.title}</h3>
-                <p className="account-amount">{account.amount}</p>
-                <p className="account-amount-description">{account.description}</p>
-            </div>
-            <Button />
-            </section>
-        ))}
+            {accounts.map(account => (
+                <AccountItem
+                    key={account.id}
+                    title={account.title}
+                    amount={account.amount}
+                    description={account.description}
+                />
+            ))}
         </div>
     )
 }

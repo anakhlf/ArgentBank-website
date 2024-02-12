@@ -1,10 +1,7 @@
-export const updateUser = (userData) => {
-    return {
-        type: 'UPDATE_USER',
-        payload: userData,
-    };
-};
+import { loginFailure, loginSuccess } from './authAction';
 
+
+//met à jour le username
 export const setUserData = (userData) => {
     return {
       type: 'SET_USER_DATA',
@@ -21,15 +18,27 @@ export const setUserData = (userData) => {
   
   export const fetchUserData = () => async (dispatch) => {
     const token = localStorage.getItem('token');
+    if (!token) {
+      // Si aucun token n'est trouvé, dispatche une erreur ou gère l'absence du token
+      dispatch(loginFailure("No token found"));
+      return;
+    }
     try {
-      let response = await fetch("http://localhost:3001/api/v1/user/profile", {
-        method: "GET",
+      let userInfoResponse = await fetch("http://localhost:3001/api/v1/user/profile", {
+        method: "POST",
         headers: { "Authorization": `Bearer ${token}` },
       }); 
   
-      if (response.ok) {
-        const userData = await response.json();
-        dispatch(setUserData(userData));
+      if (userInfoResponse.ok) {
+        const userInfoData = await userInfoResponse.json();
+        // Créez un nouvel objet avec seulement les données nécessaires
+        const userData = {
+          firstName: userInfoData.body.firstName,
+          lastName: userInfoData.body.lastName,
+          userName: userInfoData.body.userName,
+        };
+        // Dispatchez l'action setUserData avec ce nouvel objet
+        dispatch(loginSuccess(userData, token));
       } else {
         dispatch(fetchUserDataError("Failed to fetch user data"));
       }
