@@ -11,15 +11,14 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.payload, // Cela met à jour firstName, lastName, et userName directement à la racine de l'état
-                error: null, // Vous pouvez réinitialiser l'erreur ici
+                error: null, 
             };
         case 'UPDATE_USER':
             return {
                 ...state,
                 ...action.payload,
             };
-        case 'FETCH_USER_DATA_FAILURE':
-            // Gestion d'une action d'erreur, en supposant que vous voulez stocker le message d'erreur
+    case 'FETCH_USER_DATA_FAILURE':
             return {
                 ...state,
                 error: action.payload, // Stocker le message d'erreur dans l'état

@@ -1,27 +1,39 @@
 .input-remember {
-    display: flex;
-  }
-  
-  .input-remember label {
-    margin-left: 0.25rem;
-  }
-  
-  .input-wrapper {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    margin-bottom: 1rem;
-  }
-  
-  .input-wrapper label {
-    font-weight: bold;
-  }
-  
-  .input-wrapper input {
-    padding: 5px;
-    font-size: 1.2rem;
-  }
-  
-  #remember-me {
-    flex-direction: row-reverse;
-  }
+  display: flex;
+}
+
+.input-remember label {
+  margin-left: 0.25rem;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.input-wrapper label {
+  font-weight: bold;
+}
+
+.input-wrapper input {
+  padding: 5px;
+  font-size: 1.2rem;
+}
+
+#remember-me {
+  flex-direction: row-reverse;
+}
+
+.error-border {
+  border: 1px solid red;
+}
+
+.error-message {
+  color: red;
+  font-size: 12pt;
+  text-align: left;
+  padding-top: 3px;
+
+}

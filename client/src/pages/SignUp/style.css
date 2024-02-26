@@ -2,32 +2,32 @@
     flex: 1;
 }
 
-  .bg-dark {
-    background-color: #12002b;
-    padding-top: 3rem;
-    padding-bottom: 7rem;
-  }
+.bg-dark {
+  background-color: #12002b;
+  padding-top: 3rem;
+  padding-bottom: 7rem;
+}
 
-  .sign-in-content {
-    box-sizing: border-box;
-    background-color: white;
-    width: 300px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  
-  .sign-in-icon {
-    font-size: 5rem;
-  }
+.sign-in-content {
+  box-sizing: border-box;
+  background-color: white;
+  width: 300px;
+  margin: 0 auto;
+  padding: 2rem;
+}
 
-  .footer {
-    display: flex;
-    justify-content: center;
-    border-top: 2px solid #ccc;
-    padding: 2rem 0 1.5rem;
-  }
-  
-  .footer-text {
-    margin: 0;
-    padding: 0;
-  }
+.sign-in-icon {
+  font-size: 5rem;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid #ccc;
+  padding: 2rem 0 1.5rem;
+}
+
+.footer-text {
+  margin: 0;
+  padding: 0;
+}

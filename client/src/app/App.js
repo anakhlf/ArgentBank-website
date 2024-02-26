@@ -24,14 +24,14 @@ function App() {
   }, [dispatch]);
   return (
     <div className='App'>
-        <Router>
+      <Router>
           <Routes>
           <Route path="/" element={<Layout><Home /></Layout>} />
           <Route path="/signUp" element={<Layout><SignUp /></Layout>} />
           <Route path="/Profil" element={<ProtectedRoute><Layout><Profil /></Layout></ProtectedRoute>} />
         </Routes>
-        </Router>
-      </div>
+      </Router>
+    </div>
   );
 }
 

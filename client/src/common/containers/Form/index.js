@@ -36,10 +36,15 @@ function Form () {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(loginUser({ email: formData.email, password: formData.password }, navigate, setError));
-      };
+        try {
+            await dispatch(loginUser({ email: formData.email, password: formData.password }, navigate));
+        } catch (error) {
+            setError(error.message);
+            console.log("error b")
+        }
+    };
 
     return (
         <form onSubmit={handleSubmit}>
@@ -50,6 +55,7 @@ function Form () {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                error={!!error}
             />
             <Field
                 label="Password"
@@ -58,6 +64,7 @@ function Form () {
                 name="password"
                 value={formData.password} 
                 onChange={handleChange}
+                error={!!error}
             />
             <Field
                 label="Remember me"
@@ -69,6 +76,7 @@ function Form () {
                 isCheckbox={true}
             />
             <button type="submit" className="sign-in-button">Sign In</button>
+            {error && <div className="error-message">{error}</div>}
         </form>
     )
 }
